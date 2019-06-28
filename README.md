@@ -1,4 +1,4 @@
-# 
-add the following lines to scripts in your package.json
-'start': 'webpack --watch --mode=development'
-'server': 'http-server'
+# Flutter
+
+Twitter-like social media app
+Built using the MERN stack and experimental technologies
