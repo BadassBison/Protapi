@@ -2,7 +2,8 @@ const data = {
     routes: [
         "employees",
         "customers",
-        "partners"
+        "partners",
+        "comments"
     ],
     parse: parseTypes
 }
@@ -45,8 +46,21 @@ function parseTypes(route, req, res) {
             if(!newEntry.name || !newEntry.email || !newEntry.company) {
                 return res.status(400).json({ msg: 'Please include a name, email, and company'});
             }
-    }
 
+        // Comments schema ------------------------------------------------------------------
+        case 'comments':
+            newEntry = {
+                subject: req.body.subject,
+                content: req.body.content,
+                userId: req.body.userId
+            }
+
+            if(!newEntry.subject || !newEntry.content) {
+                return res.status(400).json({ msg: 'Please include a subject and body'});
+            } else if (newEntry.content.length > 140) {
+                return rex.status(400).json({ msg: 'Body must be less than 140 characters' });
+            }
+    }
     return newEntry;
 }
 
