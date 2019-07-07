@@ -1,0 +1,94 @@
+const express = require('express');
+const router = express.Router();
+const Datastore = require('nedb');
+const { parse } = require('../api');
+
+// Index
+router.get('/', (req, res) => {
+    
+    const route = req.baseUrl.slice(5);
+
+    const db = new Datastore(`./database/${route}.db`);
+    db.loadDatabase();
+    
+    db.find({}, function(err, docs){
+        res.json(docs);
+    });
+});
+
+// Show
+router.get('/:id', (req, res) => {
+
+    const route = req.baseUrl.slice(5);
+    
+    const db = new Datastore(`./database/${route}.db`);
+    db.loadDatabase();
+
+    db.findOne({ _id: req.params.id }, function(err, docs){
+        if(docs) {
+            res.json(docs);
+        } else {
+            res.status(400).json({ msg: `No ${route} with an id of ${req.params.id}` });
+        }
+    });
+});
+
+// Create
+router.post('/', (req, res) => {
+    
+    const route = req.baseUrl.slice(5);
+    let newEntry = parse(route, req, res);
+
+    const db = new Datastore(`./database/${route}.db`);
+    db.loadDatabase();
+
+    db.findOne({email: newEntry.email}, function(err, doc){
+        if(doc) {
+             res.status(400).json({ msg: `Email ${newEntry.email} already exists in database` })
+        } else {
+            db.insert(newEntry, function(err, newDoc){
+                res.json({ msg: `${route} updated`, entry: newDoc});
+            });
+        }
+    });
+
+    
+});
+
+// Update
+router.put('/:id', (req, res) => {
+
+    const route = req.baseUrl.slice(5);
+
+
+
+    const db = new Datastore(`./database/${route}.db`);
+    db.loadDatabase();
+
+    db.update({ _id: req.params.id }, {$set: req.body}, {}, function(err, numUpdated){
+        if(entry > 0){
+            res.json({ msg: `${route} updated`, entry: req.body});
+        } else {
+            res.status(400).json({ msg: `No ${route} with an id of ${req.params.id}` });
+        }
+    });
+});
+
+// Destroy
+router.delete('/:id', (req, res) => {
+    
+    const route = req.baseUrl.slice(5);
+
+    const db = new Datastore(`./database/${route}.db`);
+    db.loadDatabase();
+    
+    db.remove({ _id: req.params.id }, {}, function(err, numRemoved){
+        if(numRemoved >= 0) {
+            res.json({ msg: `${route}: ${req.params.id} was removed` });
+        } else {
+            res.status(400).json({ msg: `No ${route} with an id of ${req.params.id}` });
+        }
+    });
+});
+
+module.exports = router;
