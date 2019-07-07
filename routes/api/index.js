@@ -1,7 +1,8 @@
 const data = {
     routes: [
         "employees",
-        "customers"
+        "customers",
+        "partners"
     ],
     parse: parseTypes
 }
@@ -28,6 +29,17 @@ function parseTypes(route, req, res) {
         
             if(!newEntry.name || !newEntry.email) {
                 return res.status(400).json({ msg: 'Please include a name and email' });
+            }
+
+        case 'partners':
+            newEntry = {
+                name: req.body.name,
+                email: req.body.email,
+                company: req.body.company
+            }
+
+            if(!newEntry.name || !newEntry.email || !newEntry.company) {
+                return res.status(400).json({ msg: 'Please include a name, email, and company'});
             }
     }
 
