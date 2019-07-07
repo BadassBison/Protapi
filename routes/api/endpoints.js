@@ -7,7 +7,6 @@ const { parse } = require('../api');
 router.get('/', (req, res) => {
     
     const route = req.baseUrl.slice(5);
-
     const db = new Datastore(`./database/${route}.db`);
     db.loadDatabase();
     
@@ -20,7 +19,6 @@ router.get('/', (req, res) => {
 router.get('/:id', (req, res) => {
 
     const route = req.baseUrl.slice(5);
-    
     const db = new Datastore(`./database/${route}.db`);
     db.loadDatabase();
 
@@ -51,23 +49,20 @@ router.post('/', (req, res) => {
             });
         }
     });
-
-    
 });
+
 
 // Update
 router.put('/:id', (req, res) => {
 
     const route = req.baseUrl.slice(5);
-
-
-
     const db = new Datastore(`./database/${route}.db`);
     db.loadDatabase();
-
-    db.update({ _id: req.params.id }, {$set: req.body}, {}, function(err, numUpdated){
-        if(entry > 0){
-            res.json({ msg: `${route} updated`, entry: req.body});
+    
+    const updatedEntry = parse(route, req, res);
+    db.update({ _id: req.params.id }, {$set: updatedEntry}, {}, function(err, numUpdated){
+        if(numUpdated > 0){
+            res.json({ msg: `${route} updated`, entry: updatedEntry});
         } else {
             res.status(400).json({ msg: `No ${route} with an id of ${req.params.id}` });
         }
