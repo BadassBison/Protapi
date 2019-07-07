@@ -10,6 +10,8 @@ const data = {
 function parseTypes(route, req, res) {
     let newEntry;
     switch(route){
+        
+        // Employees schema
         case 'employees':
             newEntry = {
                 name: req.body.name,
@@ -21,6 +23,7 @@ function parseTypes(route, req, res) {
                 return res.status(400).json({ msg: 'Please include a name and email' });
             }
 
+        // Customers schema
         case 'customers':
             newEntry = {
                 name: req.body.name,
@@ -31,6 +34,7 @@ function parseTypes(route, req, res) {
                 return res.status(400).json({ msg: 'Please include a name and email' });
             }
 
+        // Partners schema
         case 'partners':
             newEntry = {
                 name: req.body.name,
