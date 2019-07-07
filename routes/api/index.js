@@ -9,10 +9,11 @@ const data = {
 }
 
 function parseTypes(route, req, res) {
+    
     let newEntry;
     switch(route){
         
-        // Employees schema
+        // Employees schema ------------------------------------------------------------------
         case 'employees':
             newEntry = {
                 name: req.body.name,
@@ -20,22 +21,26 @@ function parseTypes(route, req, res) {
                 position: req.body.position || "employee"
             }
         
+            // Validations
             if(!newEntry.name || !newEntry.email) {
                 return res.status(400).json({ msg: 'Please include a name and email' });
             }
 
-        // Customers schema
+
+        // Customers schema ------------------------------------------------------------------
         case 'customers':
             newEntry = {
                 name: req.body.name,
                 email: req.body.email,
             }
         
+            // Validations
             if(!newEntry.name || !newEntry.email) {
                 return res.status(400).json({ msg: 'Please include a name and email' });
             }
 
-        // Partners schema
+
+        // Partners schema ------------------------------------------------------------------
         case 'partners':
             newEntry = {
                 name: req.body.name,
@@ -43,9 +48,11 @@ function parseTypes(route, req, res) {
                 company: req.body.company
             }
 
+            // Validations
             if(!newEntry.name || !newEntry.email || !newEntry.company) {
                 return res.status(400).json({ msg: 'Please include a name, email, and company'});
             }
+
 
         // Comments schema ------------------------------------------------------------------
         case 'comments':
@@ -55,6 +62,7 @@ function parseTypes(route, req, res) {
                 userId: req.body.userId
             }
 
+            // Validations
             if(!newEntry.subject || !newEntry.content) {
                 return res.status(400).json({ msg: 'Please include a subject and body'});
             } else if (newEntry.content.length > 140) {
