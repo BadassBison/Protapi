@@ -2,7 +2,7 @@ const data = {
     routes: [
         "employees",
         "customers",
-        "partners",
+        "vendors",
         "comments"
     ],
     parse: parseTypes
@@ -13,8 +13,8 @@ function parseTypes(route, req, res) {
     let newEntry;
     switch(route){
         
-        // Employees schema ------------------------------------------------------------------
-        case 'employees':
+        // Employees Schema ------------------------------------------------------------------
+        case data.routes[0]:
             newEntry = {
                 name: req.body.name,
                 email: req.body.email,
@@ -25,10 +25,11 @@ function parseTypes(route, req, res) {
             if(!newEntry.name || !newEntry.email) {
                 return res.status(400).json({ msg: 'Please include a name and email' });
             }
+            break;
 
 
-        // Customers schema ------------------------------------------------------------------
-        case 'customers':
+        // Customers Schema ------------------------------------------------------------------
+        case data.routes[1]:
             newEntry = {
                 name: req.body.name,
                 email: req.body.email,
@@ -38,10 +39,11 @@ function parseTypes(route, req, res) {
             if(!newEntry.name || !newEntry.email) {
                 return res.status(400).json({ msg: 'Please include a name and email' });
             }
+            break;
 
 
-        // Partners schema ------------------------------------------------------------------
-        case 'partners':
+        // Vendors Schema ------------------------------------------------------------------
+        case data.routes[2]:
             newEntry = {
                 name: req.body.name,
                 email: req.body.email,
@@ -52,10 +54,11 @@ function parseTypes(route, req, res) {
             if(!newEntry.name || !newEntry.email || !newEntry.company) {
                 return res.status(400).json({ msg: 'Please include a name, email, and company'});
             }
+            break;
 
 
-        // Comments schema ------------------------------------------------------------------
-        case 'comments':
+        // Comments Schema ------------------------------------------------------------------
+        case data.routes[3]:
             newEntry = {
                 subject: req.body.subject,
                 content: req.body.content,
@@ -68,6 +71,10 @@ function parseTypes(route, req, res) {
             } else if (newEntry.content.length > 140) {
                 return rex.status(400).json({ msg: 'Body must be less than 140 characters' });
             }
+            break;
+
+        // Default ------------------------------------------------------------------
+        default: return res.status(400).json({ msg: `${route} database does not exist` });
     }
     return newEntry;
 }

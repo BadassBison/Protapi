@@ -40,7 +40,7 @@ router.post('/', (req, res) => {
     const db = new Datastore(`./database/${route}.db`);
     db.loadDatabase();
 
-    db.findOne({email: newEntry.email}, function(err, doc){
+    db.findOne({ email: newEntry.email }, function(err, doc){
         if(doc) {
              res.status(400).json({ msg: `Email ${newEntry.email} already exists in database` })
         } else {
