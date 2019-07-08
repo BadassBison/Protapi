@@ -1,13 +1,15 @@
 // Dependencies: express
 const express = require('express');
 const logger = require('./middleware/logger');
+const requestTime = require('./middleware/request-time');
 const { routes } = require('./routes/api');
 
 // Initialize express
 const app = express();
 
-// Logger middleware
+// Custom middlewares
 app.use(logger);
+app.use(requestTime);
 
 // Body parser middleware
 app.use(express.json());

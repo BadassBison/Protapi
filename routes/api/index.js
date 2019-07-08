@@ -97,7 +97,7 @@ function parseTypes(route, req, res) {
             break;
 
         // Default ------------------------------------------------------------------
-        default: return res.status(400).json({ msg: `${route} database does not exist` });
+        default: return res.status(400).json({ msg: `${route} database table does not exist` });
     }
     return newEntry;
 }
