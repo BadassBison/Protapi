@@ -7,4 +7,4 @@ module.exports = (req, res, next) => {
     req.requestDate = date;
     req.requestTime = time;
     next();
-}
+};
