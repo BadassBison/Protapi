@@ -3,7 +3,8 @@ const data = {
         "employees",
         "customers",
         "vendors",
-        "comments"
+        "comments",
+        "inventory"
     ],
     parse: parseTypes
 }
@@ -70,6 +71,28 @@ function parseTypes(route, req, res) {
                 return res.status(400).json({ msg: 'Please include a subject and body'});
             } else if (newEntry.content.length > 140) {
                 return rex.status(400).json({ msg: 'Body must be less than 140 characters' });
+            }
+            break;
+
+
+        // Inventory Schema ------------------------------------------------------------------
+        case data.routes[4]:
+            newEntry = {
+                size: req.body.size,
+                category: req.body.category,
+                brand: req.body.brand,
+                price: req.body.price
+            }
+
+            // Validations
+            if(!newEntry.size){
+                return res.status(400).json({ msg: 'Please include a size'});
+            } else if(!newEntry.category) {
+                return res.status(400).json({ msg: 'Please include a category'});
+            } else if(!newEntry.brand) {
+                return res.status(400).json({ msg: 'Please include a brand'});
+            } else if(!newEntry.price) {
+                return res.status(400).json({ msg: 'Please include a price'});
             }
             break;
 
