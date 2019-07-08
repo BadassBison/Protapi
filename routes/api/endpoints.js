@@ -3,7 +3,8 @@ const router = express.Router();
 const Datastore = require('nedb');
 const { parse } = require('../api');
 
-// Index
+
+// Index __________________________________________________________
 router.get('/', (req, res) => {
     
     const route = req.baseUrl.slice(5);
@@ -15,7 +16,8 @@ router.get('/', (req, res) => {
     });
 });
 
-// Show
+
+// Show __________________________________________________________
 router.get('/:id', (req, res) => {
 
     const route = req.baseUrl.slice(5);
@@ -31,7 +33,8 @@ router.get('/:id', (req, res) => {
     });
 });
 
-// Create
+
+// Create __________________________________________________________
 router.post('/', (req, res) => {
     
     const route = req.baseUrl.slice(5);
@@ -52,7 +55,7 @@ router.post('/', (req, res) => {
 });
 
 
-// Update
+// Update __________________________________________________________
 router.put('/:id', (req, res) => {
 
     const route = req.baseUrl.slice(5);
@@ -69,11 +72,11 @@ router.put('/:id', (req, res) => {
     });
 });
 
-// Destroy
+
+// Destroy __________________________________________________________
 router.delete('/:id', (req, res) => {
     
     const route = req.baseUrl.slice(5);
-
     const db = new Datastore(`./database/${route}.db`);
     db.loadDatabase();
     
